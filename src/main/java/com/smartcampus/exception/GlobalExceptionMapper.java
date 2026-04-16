@@ -33,7 +33,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
                 .entity(Map.of(
                     "status", 500,
                     "error", "INTERNAL_SERVER_ERROR",
-                    "message", "An unexpected error occurred. Please contact support."
+                    "message", "An unexpected error occurred."
                 ))
                 .build();
     }

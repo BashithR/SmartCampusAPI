@@ -59,14 +59,13 @@ public class SensorResource {
         store.getSensors().put(sensor.getId(), sensor);
         store.getReadings().put(sensor.getId(), new ArrayList<>());
 
-        // Link sensor to its room
+        // to link sensor to its room
         Room room = store.getRooms().get(sensor.getRoomId());
         room.getSensorIds().add(sensor.getId());
 
         return Response.status(201).entity(sensor).build();
     }
 
-    // Sub-resource locator — delegates /sensors/{sensorId}/readings
     // to SensorReadingResource
     @Path("/{sensorId}/readings")
     public SensorReadingResource getReadingResource(
