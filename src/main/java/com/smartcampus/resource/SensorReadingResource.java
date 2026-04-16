@@ -26,12 +26,12 @@ public class SensorReadingResource {
     private final Sensor sensor;
     private final DataStore store = DataStore.getInstance();
 
-    // Constructor receives the specific sensor from SensorResource
+    // Constructor gets the specific sensor from SensorResource
     public SensorReadingResource(Sensor sensor) {
         this.sensor = sensor;
     }
 
-    // GET /api/v1/sensors/{id}/readings — Get reading history
+    // GET /api/v1/sensors/{id}/readings - to Get reading history
     @GET
     public Response getReadings() {
         List<SensorReading> history = store.getReadings()
@@ -39,10 +39,10 @@ public class SensorReadingResource {
         return Response.ok(history).build();
     }
 
-    // POST /api/v1/sensors/{id}/readings — Add a new reading
+    // POST /api/v1/sensors/{id}/readings - to add a new reading
     @POST
     public Response addReading(SensorReading reading) {
-        // Business rule: can't post if sensor is under maintenance
+        // can't dp post if sensor is under maintenance
         if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus())) {
             throw new SensorUnavailableException(sensor.getId());
         }
@@ -50,7 +50,7 @@ public class SensorReadingResource {
         SensorReading newReading = new SensorReading(reading.getValue());
         store.getReadings().get(sensor.getId()).add(newReading);
 
-        // SIDE EFFECT: update parent sensor's currentValue
+        // update main sensor's currentValue
         sensor.setCurrentValue(reading.getValue());
 
         return Response.status(201).entity(newReading).build();

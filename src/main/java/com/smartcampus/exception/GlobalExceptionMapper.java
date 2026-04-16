@@ -25,7 +25,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
     public Response toResponse(Throwable e) {
-        // Log the real error internally (not exposed to client)
+        // Logging
         LOGGER.log(Level.SEVERE, "Unexpected server error", e);
 
         return Response.status(500)

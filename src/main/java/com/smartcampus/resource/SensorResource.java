@@ -41,10 +41,10 @@ public class SensorResource {
         return Response.ok(result).build();
     }
 
-    // POST /api/v1/sensors — Register a new sensor
+    // POST /api/v1/sensors - to register a new sensor
     @POST
     public Response createSensor(Sensor sensor) {
-        // Validate that the roomId exists
+        // to validate that the roomId exists
         if (sensor.getRoomId() == null || 
             !store.getRooms().containsKey(sensor.getRoomId())) {
             throw new LinkedResourceNotFoundException(sensor.getRoomId());

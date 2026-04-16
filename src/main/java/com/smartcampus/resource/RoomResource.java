@@ -28,14 +28,14 @@ public class RoomResource {
 
     private final DataStore store = DataStore.getInstance();
 
-    // GET /api/v1/rooms — List all rooms
+    // GET /api/v1/rooms - this List all rooms
     @GET
     public Response getAllRooms() {
         List<Room> roomList = new ArrayList<>(store.getRooms().values());
         return Response.ok(roomList).build();
     }
 
-    // POST /api/v1/rooms — Create a room
+    // POST /api/v1/rooms - to Create a room
     @POST
     public Response createRoom(Room room) {
         if (room.getId() == null || room.getId().isBlank()) {
@@ -52,7 +52,7 @@ public class RoomResource {
         return Response.status(201).entity(room).build();
     }
 
-    // GET /api/v1/rooms/{roomId} — Get one room
+    // GET /api/v1/rooms/{roomId} - tp Get one room
     @GET
     @Path("/{roomId}")
     public Response getRoom(@PathParam("roomId") String roomId) {
@@ -65,7 +65,7 @@ public class RoomResource {
         return Response.ok(room).build();
     }
 
-    // DELETE /api/v1/rooms/{roomId} — Delete a room
+    // DELETE /api/v1/rooms/{roomId} - to DELETE a room
     @DELETE
     @Path("/{roomId}")
     public Response deleteRoom(@PathParam("roomId") String roomId) {
@@ -75,7 +75,7 @@ public class RoomResource {
                     .entity(errorBody("Room not found: " + roomId))
                     .build();
         }
-        // Business rule: can't delete if it has sensors
+        // if it can't delete if it has sensors
         if (!room.getSensorIds().isEmpty()) {
             throw new RoomNotEmptyException(roomId);
         }

@@ -23,12 +23,12 @@ public class DataStore {
     // Single shared instance
     private static final DataStore INSTANCE = new DataStore();
 
-    // Our "tables"
+    // The Tables
     private final Map<String, Room> rooms = new ConcurrentHashMap<>();
     private final Map<String, Sensor> sensors = new ConcurrentHashMap<>();
     private final Map<String, List<SensorReading>> readings = new ConcurrentHashMap<>();
 
-    // Seed with some sample data so the API isn't empty on first run
+    // some sample data so the API isn't empty in the first run
     private DataStore() {
         Room r1 = new Room("LIB-301", "Library Quiet Study", 50);
         Room r2 = new Room("LAB-101", "Computer Lab", 30);
