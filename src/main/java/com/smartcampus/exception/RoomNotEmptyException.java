@@ -6,8 +6,11 @@ package com.smartcampus.exception;
 
 /**
  *
- * @author ASUS
+ * @author Bashith Ratnaweera
  */
-public class RoomNotEmptyException {
-    
+
+public class RoomNotEmptyException extends RuntimeException {
+    public RoomNotEmptyException(String roomId) {
+        super("Room '" + roomId + "' cannot be deleted — it still has sensors assigned.");
+    }
 }
