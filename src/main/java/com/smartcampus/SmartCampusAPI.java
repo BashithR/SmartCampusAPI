@@ -14,5 +14,5 @@ import jakarta.ws.rs.core.Application;
 @ApplicationPath("/api/v1")
 public class SmartCampusAPI extends Application {
     // JAX-RS auto-discovers @Provider and @Path classes
-    // No code needed here — the annotation does the work
+    // No code needed here the annotation will do the work 
 }
