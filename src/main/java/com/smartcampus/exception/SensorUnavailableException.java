@@ -6,8 +6,11 @@ package com.smartcampus.exception;
 
 /**
  *
- * @author ASUS
+ * @author Bashith Ratnaweera
  */
-public class SensorUnavailableException {
-    
+
+public class SensorUnavailableException extends RuntimeException {
+    public SensorUnavailableException(String sensorId) {
+        super("Sensor '" + sensorId + "' is under MAINTENANCE and cannot accept readings.");
+    }
 }
