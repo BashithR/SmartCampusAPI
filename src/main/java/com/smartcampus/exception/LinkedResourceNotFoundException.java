@@ -6,8 +6,11 @@ package com.smartcampus.exception;
 
 /**
  *
- * @author ASUS
+ * @author Bashith Ratnaweera
  */
-public class LinkedResourceNotFoundException {
-    
+
+public class LinkedResourceNotFoundException extends RuntimeException {
+    public LinkedResourceNotFoundException(String roomId) {
+        super("Referenced roomId '" + roomId + "' does not exist in the system.");
+    }
 }
