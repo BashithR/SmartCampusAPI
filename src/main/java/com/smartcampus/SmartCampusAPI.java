@@ -8,9 +8,11 @@ package com.smartcampus;
  *
  * @author Bashith Ratnaweera
  */
-public class SmartCampusAPI {
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-    }
+@ApplicationPath("/api/v1")
+public class SmartCampusAPI extends Application {
+    // JAX-RS auto-discovers @Provider and @Path classes
+    // No code needed here — the annotation does the work
 }
