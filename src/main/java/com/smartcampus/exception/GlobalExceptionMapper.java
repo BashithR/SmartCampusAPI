@@ -9,14 +9,15 @@ package com.smartcampus.exception;
  * @author Bashith Ratnaweera
  */
 
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Provider
 public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
@@ -34,7 +35,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
             Response original = wae.getResponse();
             
             // Log it but return the proper status
-            LOGGER.warning("JAX-RS exception: " + e.getMessage());
+            LOGGER.warning(String.format("JAX-RS exception: %s", e.getMessage()));
             
             return Response.status(original.getStatus())
                     .type(MediaType.APPLICATION_JSON)
