@@ -9,6 +9,7 @@ package com.smartcampus.exception;
  * @author Bashith Ratnaweera
  */
 
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -20,12 +21,32 @@ import java.util.logging.Logger;
 @Provider
 public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
 
-    private static final Logger LOGGER = 
+    private static final Logger LOGGER =
         Logger.getLogger(GlobalExceptionMapper.class.getName());
 
     @Override
     public Response toResponse(Throwable e) {
-        // Logging
+
+        // IMPORTANT: If it's already a JAX-RS exception (like 404, 405 etc.),
+        // let it pass through with its correct status code — don't turn it into 500
+        if (e instanceof WebApplicationException) {
+            WebApplicationException wae = (WebApplicationException) e;
+            Response original = wae.getResponse();
+            
+            // Log it but return the proper status
+            LOGGER.warning("JAX-RS exception: " + e.getMessage());
+            
+            return Response.status(original.getStatus())
+                    .type(MediaType.APPLICATION_JSON)
+                    .entity(Map.of(
+                        "status", original.getStatus(),
+                        "error", "REQUEST_ERROR",
+                        "message", e.getMessage() != null ? e.getMessage() : "Request error"
+                    ))
+                    .build();
+        }
+
+        // For genuine unexpected errors (NullPointerException, etc.) → 500
         LOGGER.log(Level.SEVERE, "Unexpected server error", e);
 
         return Response.status(500)
@@ -33,7 +54,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
                 .entity(Map.of(
                     "status", 500,
                     "error", "INTERNAL_SERVER_ERROR",
-                    "message", "An unexpected error occurred."
+                    "message", "An unexpected error occurred. Please contact support."
                 ))
                 .build();
     }
